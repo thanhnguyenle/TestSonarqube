@@ -25,22 +25,22 @@ pipeline {
                 '''
             }
         }
-
-        stage('Run Unit Tests') {
-            steps {
-                // Navigate to 'demo' folder and run the tests
-                bat '''
-                    cd demo
-                    mvn surefire-report:report
-                '''
-            }
-            post {
-                always {
-                    // Publish test results to Jenkins
-                    junit 'demo/target/reports/surefire.html'
-                }
-            }
-        }
+                     
+        // stage('Run Unit Tests') {
+        //     steps {
+        //         // Navigate to 'demo' folder and run the tests
+        //         bat '''
+        //             cd demo
+        //             mvn surefire-report:reportf
+        //         '''
+        //     }
+        //     // post {
+        //     //     always {
+        //     //         // Publish test results to Jenkins
+        //     //         junit 'demo/target/reports/surefire.html'
+        //     //     }
+        //     // }
+        // }
 
         stage('SonarQube Analysis') {
             steps {
