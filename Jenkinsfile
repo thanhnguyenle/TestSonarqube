@@ -18,29 +18,38 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build the project using Maven on Windows
-                bat 'mvn clean install'
+                // Navigate to 'demo' folder and run the Maven build command on Windows
+                bat '''
+                    cd demo
+                    mvn clean install
+                '''
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                // Run tests and ensure test results are captured
-                bat 'mvn test'
+                // Navigate to 'demo' folder and run the tests
+                bat '''
+                    cd demo
+                    mvn test
+                '''
             }
             post {
                 always {
                     // Publish test results to Jenkins
-                    junit '**/target/surefire-reports/*.xml'
+                    junit 'demo/target/surefire-reports/*.xml'
                 }
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                // Run SonarQube scanner to analyze the code
+                // Navigate to 'demo' folder and run SonarQube analysis
                 withSonarQubeEnv('SonarQube') {
-                    bat 'mvn sonar:sonar -Dsonar.host.url=%SONARQUBE_URL% -Dsonar.login=%SONARQUBE_TOKEN%'
+                    bat '''
+                        cd demo
+                        mvn sonar:sonar -Dsonar.host.url=%SONARQUBE_URL% -Dsonar.login=%SONARQUBE_TOKEN%
+                    '''
                 }
             }
         }
