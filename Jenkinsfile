@@ -31,13 +31,13 @@ pipeline {
                 // Navigate to 'demo' folder and run the tests
                 bat '''
                     cd demo
-                    mvn test
+                    mvn surefire-report:report
                 '''
             }
             post {
                 always {
                     // Publish test results to Jenkins
-                    junit 'demo/target/surefire-reports/*.xml'
+                    junit 'demo/target/reports/surefire.html'
                 }
             }
         }
